@@ -39,30 +39,30 @@ the last level it will have the color of the last color.
 
 /****************/
 
-function colorSub(a, b){
+function colorSub(a, b) {
 	return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
 }
 
-function colorAdd(a, b){
+function colorAdd(a, b) {
 	return [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
 }
 
-function colorMul(a, mul){
+function colorMul(a, mul) {
 	return [Math.floor(a[0] * mul), Math.floor(a[1] * mul), Math.floor(a[2] * mul)];
 }
 
-function colorRGB(color){
+function colorRGB(color) {
 	return "rgb(" + color[0] + ", " + color[1] + ", " + color[2] + ")";
 }
 
-theWebUI.setRatioColors = function(){
+theWebUI.setRatioColors = function() {
 	$(".stable-List-col-6").each(function(index) {
 		ratio = $(this).children("div")[0].innerHTML
 		color = null;
 		proc = 0;
 
-		$.each(levels, function(index, level){
-			if(ratio < level){
+		$.each(levels, function(index, level) {
+			if(ratio < level) {
 				leveldiff = level - levels[index - 1];
 				proc = (ratio - levels[index - 1]) / leveldiff;
 
@@ -74,7 +74,7 @@ theWebUI.setRatioColors = function(){
 			}
 		});
 
-		if(color === null){
+		if(color === null) {
 			color = colors[colors.length - 1];
 		}
 
@@ -85,22 +85,22 @@ theWebUI.setRatioColors = function(){
 				break;
 			case "cell-background":
 			default:
-		$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
+				$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
 				$(this).css("background-image", "none");
 				break;
 		}
 	});
 };
 
-theWebUI.setRatioColors2 = function(){
+theWebUI.setRatioColors2 = function() {
 	/* Ratio/Day */
 	$(".stable-List-col-24").each(function(index) {
 		ratio = $(this).children("div")[0].innerHTML
 		color = null;
 		proc = 0;
 
-		$.each(levels, function(index, level){
-			if(ratio < level){
+		$.each(levels, function(index, level) {
+			if(ratio < level) {
 				leveldiff = level - levels[index - 1];
 				proc = (ratio - levels[index - 1]) / leveldiff;
 
@@ -112,7 +112,7 @@ theWebUI.setRatioColors2 = function(){
 			}
 		});
 
-		if(color === null){
+		if(color === null) {
 			color = colors[colors.length - 1];
 		}
 
@@ -123,7 +123,7 @@ theWebUI.setRatioColors2 = function(){
 				break;
 			case "cell-background":
 			default:
-		$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
+				$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
 				$(this).css("background-image", "none");
 				break;
 		}
@@ -134,8 +134,8 @@ theWebUI.setRatioColors2 = function(){
 		color = null;
 		proc = 0;
 
-		$.each(levels, function(index, level){
-			if(ratio < level){
+		$.each(levels, function(index, level) {
+			if(ratio < level) {
 				leveldiff = level - levels[index - 1];
 				proc = (ratio - levels[index - 1]) / leveldiff;
 
@@ -147,7 +147,7 @@ theWebUI.setRatioColors2 = function(){
 			}
 		});
 
-		if(color === null){
+		if(color === null) {
 			color = colors[colors.length - 1];
 		}
 
@@ -158,7 +158,7 @@ theWebUI.setRatioColors2 = function(){
 				break;
 			case "cell-background":
 			default:
-		$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
+				$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
 				$(this).css("background-image", "none");
 				break;
 		}
@@ -169,8 +169,8 @@ theWebUI.setRatioColors2 = function(){
 		color = null;
 		proc = 0;
 
-		$.each(levels, function(index, level){
-			if(ratio < level){
+		$.each(levels, function(index, level) {
+			if(ratio < level) {
 				leveldiff = level - levels[index - 1];
 				proc = (ratio - levels[index - 1]) / leveldiff;
 
@@ -182,7 +182,7 @@ theWebUI.setRatioColors2 = function(){
 			}
 		});
 
-		if(color === null){
+		if(color === null) {
 			color = colors[colors.length - 1];
 		}
 
@@ -193,7 +193,7 @@ theWebUI.setRatioColors2 = function(){
 				break;
 			case "cell-background":
 			default:
-		$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
+				$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
 				$(this).css("background-image", "none");
 				break;
 		}
@@ -202,27 +202,27 @@ theWebUI.setRatioColors2 = function(){
 
 plugin.onLangLoaded = function() {
 	if(this.enabled) {
-	   error = false;
+		error = false;
 
-	   // Error checking
-	   if(colors.length != levels.length){
-		   log(theUILang.ratiocolorLengthError);
-		   error = true;
-	   }
-	   if(levels[0] != 0){
-		   log(theUILang.ratiocolorLevel0);
-		   error = true;
-	   }
+		// Error checking
+		if(colors.length != levels.length) {
+			log(theUILang.ratiocolorLengthError);
+			error = true;
+		}
+		if(levels[0] != 0) {
+			log(theUILang.ratiocolorLevel0);
+			error = true;
+		}
 
-	   if(!error){
-		   plugin.tempFunc = theWebUI.tables.trt.obj.refreshRows;
-		   theWebUI.tables.trt.obj.refreshRows = function(height, fromScroll){
-			   plugin.tempFunc.call(theWebUI.tables.trt.obj, height, fromScroll);
-			   theWebUI.setRatioColors();
-			   if(allRatioColumns && thePlugins.isInstalled("trafic"))
-				   theWebUI.setRatioColors2();
+		if(!error) {
+			plugin.tempFunc = theWebUI.tables.trt.obj.refreshRows;
+			theWebUI.tables.trt.obj.refreshRows = function(height, fromScroll) {
+				plugin.tempFunc.call(theWebUI.tables.trt.obj, height, fromScroll);
+				theWebUI.setRatioColors();
+				if(allRatioColumns && thePlugins.isInstalled("trafic"))
+					theWebUI.setRatioColors2();
 			};
-			if(settings){
+			if(settings) {
 				rcSettingsDiv = $('<div>').attr("id","st_ratiocolor");
 				fieldset = $('<fieldset>').html("<legend>" + theUILang.ratiocolorName + "</legend>");
 				fieldset.append(theWebUI.ratiocolorLevelsbar(levels, colors));
@@ -249,7 +249,7 @@ plugin.onLangLoaded = function() {
 	}
 }
 
-theWebUI.ratiocolorLevelsbar = function(levels, colors){
+theWebUI.ratiocolorLevelsbar = function(levels, colors) {
 	div = $("<div>").attr("id","ratiocolorLevelsbar");
 	width = Math.floor(100/(colors.length-1)) + "%";
 	for(i=1;i<colors.length;++i)
@@ -269,7 +269,7 @@ theWebUI.updateRatiocolorsLevelsBar = function(levels, colors)
 
 plugin.onRemove = function()
 {
-	if(settings){
+	if(settings) {
 		this.removePageFromOptions("st_ratiocolors");
 	}
 }
