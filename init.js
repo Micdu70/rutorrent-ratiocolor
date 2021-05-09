@@ -56,148 +56,156 @@ function colorRGB(color) {
 }
 
 theWebUI.setRatioColors = function() {
-	$(".stable-List-col-6").each(function(index) {
-		ratio = $(this).children("div")[0].innerHTML
-		color = null;
-		proc = 0;
+	if(plugin.enabled) {
+		$(".stable-List-col-6").each(function(index) {
+			$(this).addClass("ratiocolor");
+			ratio = $(this).children("div")[0].innerHTML;
+			color = null;
+			proc = 0;
 
-		$.each(levels, function(index, level) {
-			if(ratio < level) {
-				leveldiff = level - levels[index - 1];
-				proc = (ratio - levels[index - 1]) / leveldiff;
+			$.each(levels, function(index, level) {
+				if(ratio < level) {
+					leveldiff = level - levels[index - 1];
+					proc = (ratio - levels[index - 1]) / leveldiff;
 
-				diffColor = colorSub(colors[index], colors[index - 1]);
+					diffColor = colorSub(colors[index], colors[index - 1]);
 
-				color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
+					color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
 
-				return false;
+					return false;
+				}
+			});
+
+			if(color === null) {
+				color = colors[colors.length - 1];
+			}
+
+			switch(changeWhat)
+			{
+				case "cell-background":
+					$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color: ' + colorRGB(color) + ' !important;' });
+					$(this).css("background-image", "none");
+					break;
+				case "font":
+				default:
+					$(this).css("color", colorRGB(color));
+					break;
 			}
 		});
-
-		if(color === null) {
-			color = colors[colors.length - 1];
-		}
-
-		switch(changeWhat)
-		{
-			case "font":
-				$(this).css("color", colorRGB(color));
-				break;
-			case "cell-background":
-			default:
-				$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
-				$(this).css("background-image", "none");
-				break;
-		}
-	});
+	}
 };
 
 theWebUI.setRatioColors2 = function() {
-	/* Ratio/Day */
-	$(".stable-List-col-24").each(function(index) {
-		ratio = $(this).children("div")[0].innerHTML
-		color = null;
-		proc = 0;
+	if(plugin.enabled) {
+		/* Ratio/Day */
+		$(".stable-List-col-24").each(function(index) {
+			$(this).addClass("ratiocolor");
+			ratio = $(this).children("div")[0].innerHTML;
+			color = null;
+			proc = 0;
 
-		$.each(levels, function(index, level) {
-			if(ratio < level) {
-				leveldiff = level - levels[index - 1];
-				proc = (ratio - levels[index - 1]) / leveldiff;
+			$.each(levels, function(index, level) {
+				if(ratio < level) {
+					leveldiff = level - levels[index - 1];
+					proc = (ratio - levels[index - 1]) / leveldiff;
 
-				diffColor = colorSub(colors[index], colors[index - 1]);
+					diffColor = colorSub(colors[index], colors[index - 1]);
 
-				color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
+					color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
 
-				return false;
+					return false;
+				}
+			});
+
+			if(color === null) {
+				color = colors[colors.length - 1];
+			}
+
+			switch(changeWhat)
+			{
+				case "cell-background":
+					$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color: ' + colorRGB(color) + ' !important;' });
+					$(this).css("background-image", "none");
+					break;
+				case "font":
+				default:
+					$(this).css("color", colorRGB(color));
+					break;
 			}
 		});
+		/* Ratio/Week */
+		$(".stable-List-col-25").each(function(index) {
+			$(this).addClass("ratiocolor");
+			ratio = $(this).children("div")[0].innerHTML;
+			color = null;
+			proc = 0;
 
-		if(color === null) {
-			color = colors[colors.length - 1];
-		}
+			$.each(levels, function(index, level) {
+				if(ratio < level) {
+					leveldiff = level - levels[index - 1];
+					proc = (ratio - levels[index - 1]) / leveldiff;
 
-		switch(changeWhat)
-		{
-			case "font":
-				$(this).css("color", colorRGB(color));
-				break;
-			case "cell-background":
-			default:
-				$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
-				$(this).css("background-image", "none");
-				break;
-		}
-	});
-	/* Ratio/Week */
-	$(".stable-List-col-25").each(function(index) {
-		ratio = $(this).children("div")[0].innerHTML
-		color = null;
-		proc = 0;
+					diffColor = colorSub(colors[index], colors[index - 1]);
 
-		$.each(levels, function(index, level) {
-			if(ratio < level) {
-				leveldiff = level - levels[index - 1];
-				proc = (ratio - levels[index - 1]) / leveldiff;
+					color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
 
-				diffColor = colorSub(colors[index], colors[index - 1]);
+					return false;
+				}
+			});
 
-				color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
+			if(color === null) {
+				color = colors[colors.length - 1];
+			}
 
-				return false;
+			switch(changeWhat)
+			{
+				case "cell-background":
+					$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color: ' + colorRGB(color) + ' !important;' });
+					$(this).css("background-image", "none");
+					break;
+				case "font":
+				default:
+					$(this).css("color", colorRGB(color));
+					break;
 			}
 		});
+		/* Ratio/Month */
+		$(".stable-List-col-26").each(function(index) {
+			$(this).addClass("ratiocolor");
+			ratio = $(this).children("div")[0].innerHTML;
+			color = null;
+			proc = 0;
 
-		if(color === null) {
-			color = colors[colors.length - 1];
-		}
+			$.each(levels, function(index, level) {
+				if(ratio < level) {
+					leveldiff = level - levels[index - 1];
+					proc = (ratio - levels[index - 1]) / leveldiff;
 
-		switch(changeWhat)
-		{
-			case "font":
-				$(this).css("color", colorRGB(color));
-				break;
-			case "cell-background":
-			default:
-				$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
-				$(this).css("background-image", "none");
-				break;
-		}
-	});
-	/* Ratio/Month */
-	$(".stable-List-col-26").each(function(index) {
-		ratio = $(this).children("div")[0].innerHTML
-		color = null;
-		proc = 0;
+					diffColor = colorSub(colors[index], colors[index - 1]);
 
-		$.each(levels, function(index, level) {
-			if(ratio < level) {
-				leveldiff = level - levels[index - 1];
-				proc = (ratio - levels[index - 1]) / leveldiff;
+					color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
 
-				diffColor = colorSub(colors[index], colors[index - 1]);
+					return false;
+				}
+			});
 
-				color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
+			if(color === null) {
+				color = colors[colors.length - 1];
+			}
 
-				return false;
+			switch(changeWhat)
+			{
+				case "cell-background":
+					$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color: ' + colorRGB(color) + ' !important;' });
+					$(this).css("background-image", "none");
+					break;
+				case "font":
+				default:
+					$(this).css("color", colorRGB(color));
+					break;
 			}
 		});
-
-		if(color === null) {
-			color = colors[colors.length - 1];
-		}
-
-		switch(changeWhat)
-		{
-			case "font":
-				$(this).css("color", colorRGB(color));
-				break;
-			case "cell-background":
-			default:
-				$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color:' + colorRGB(color) + important });
-				$(this).css("background-image", "none");
-				break;
-		}
-	});
+	}
 };
 
 plugin.onLangLoaded = function() {
@@ -222,54 +230,14 @@ plugin.onLangLoaded = function() {
 				if(allRatioColumns && thePlugins.isInstalled("trafic"))
 					theWebUI.setRatioColors2();
 			};
-			if(settings) {
-				rcSettingsDiv = $('<div>').attr("id","st_ratiocolor");
-				fieldset = $('<fieldset>').html("<legend>" + theUILang.ratiocolorName + "</legend>");
-				fieldset.append(theWebUI.ratiocolorLevelsbar(levels, colors));
-
-				// New level add
-				divAdd = $('<div>').attr("id", "ratiocolorAddNewLevel");
-				divAdd.html('Level: <input id="rcAddLvl" type="text" /><br />Color: #<input id="rcAddColor" type="text" />')
-				btnAdd = $('<input>').attr("type", "button").attr("value", "New level");
-				btnAdd.click(function()
-				{
-					levels.push($("#rcAddLvl").val());
-					//colors.add($("#rcAddColor").val());
-					colors.push([255,255,255]);
-
-					theWebUI.updateRatiocolorsLevelsBar(levels, colors);
-				});
-				divAdd.append(btnAdd);
-				fieldset.append(divAdd);
-
-				rcSettingsDiv.append(fieldset);
-				typehis.attachPageToOptions(rcSettingsDiv[0], theUILang.ratiocolorName);
-			}
 		}
 	}
 }
 
-theWebUI.ratiocolorLevelsbar = function(levels, colors) {
-	div = $("<div>").attr("id","ratiocolorLevelsbar");
-	width = Math.floor(100/(colors.length-1)) + "%";
-	for(i=1;i<colors.length;++i)
-	{
-		level = $("<div>").addClass("level").html(levels[i]);
-		level.attr("style", "background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, from(" + colorRGB(colors[i-1]) + "), to(" + colorRGB(colors[i]) + "));");
-		level.css("width", width);
-		div.append(level[0]);
-	}
-	return div;
-}
-
-theWebUI.updateRatiocolorsLevelsBar = function(levels, colors)
-{
-	$('#ratiocolorLevelsbar').html(theWebUI.ratiocolorLevelsbar(levels, colors).html());
-}
-
 plugin.onRemove = function()
 {
-	if(settings) {
-		this.removePageFromOptions("st_ratiocolors");
-	}
+	$('.ratiocolor').attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') });
+	$('.ratiocolor').css("color", "");
+	$('.ratiocolor').css("background-image", "");
+	$('td').removeClass('ratiocolor');
 }
