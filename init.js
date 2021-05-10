@@ -120,13 +120,13 @@ plugin.onLangLoaded = function() {
 				plugin.tempFunc.call(theWebUI.tables.trt.obj, height, fromScroll);
 				theWebUI.setRatioColors(".stable-List-col-6");
 				if(allRatioColumns && thePlugins.isInstalled("trafic")) {
-					let c = theWebUI.tables.trt.columns.length;
-					let n = 17;
+					var c = theWebUI.tables.trt.columns.length;
+					var n = 17;
 					if(thePlugins.isInstalled("uploadeta"))
 						n = 20;
-					let x = 0;
-					for(let i = n; i < c; i++) {
-						let s = $(".stable-List-col-"+i).css("text-align");
+					var x = 0;
+					for(var i = n; i < c; i++) {
+						var s = $(".stable-List-col-"+i).css("text-align");
 						if(s === "right")
 							x++;
 						else
