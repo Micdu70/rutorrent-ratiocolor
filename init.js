@@ -6,7 +6,6 @@ Modified by Micdu70
 ***/
 
 plugin.loadLang();
-plugin.loadMainCSS();
 
 /*** Settings ***/
 // Diffrent color between diffrents levels. First level must be 0.
@@ -21,6 +20,9 @@ colors =
 	[0, 233, 0]
 ];
 
+// Change color opacity of cells [ only used for "cell-background" ]
+colorOpacity = "0.5";
+
 //changeWhatEnum = ["cell-background", "font"];
 
 // what to change:
@@ -28,6 +30,7 @@ colors =
 // font
 changeWhat = "font";
 
+// Set colors
 // Set colors to all ratio columns ('trafic' plugin)
 allRatioColumns = true;
 
@@ -52,125 +55,14 @@ function colorMul(a, mul) {
 }
 
 function colorRGB(color) {
+	if(changeWhat === "cell-background")
+		return "rgba(" + color[0] + ", " + color[1] + ", " + color[2] + ", " + colorOpacity + ")";
 	return "rgb(" + color[0] + ", " + color[1] + ", " + color[2] + ")";
 }
 
-theWebUI.setRatioColors = function() {
+theWebUI.setRatioColors = function(column) {
 	if(plugin.enabled) {
-		$(".stable-List-col-6").each(function(index) {
-			$(this).addClass("ratiocolor");
-			ratio = $(this).children("div")[0].innerHTML;
-			color = null;
-			proc = 0;
-
-			$.each(levels, function(index, level) {
-				if(ratio < level) {
-					leveldiff = level - levels[index - 1];
-					proc = (ratio - levels[index - 1]) / leveldiff;
-
-					diffColor = colorSub(colors[index], colors[index - 1]);
-
-					color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
-
-					return false;
-				}
-			});
-
-			if(color === null) {
-				color = colors[colors.length - 1];
-			}
-
-			switch(changeWhat)
-			{
-				case "cell-background":
-					$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color: ' + colorRGB(color) + ' !important;' });
-					$(this).css("background-image", "none");
-					break;
-				case "font":
-				default:
-					$(this).css("color", colorRGB(color));
-					break;
-			}
-		});
-	}
-};
-
-theWebUI.setRatioColors2 = function() {
-	if(plugin.enabled) {
-		/* Ratio/Day */
-		$(".stable-List-col-24").each(function(index) {
-			$(this).addClass("ratiocolor");
-			ratio = $(this).children("div")[0].innerHTML;
-			color = null;
-			proc = 0;
-
-			$.each(levels, function(index, level) {
-				if(ratio < level) {
-					leveldiff = level - levels[index - 1];
-					proc = (ratio - levels[index - 1]) / leveldiff;
-
-					diffColor = colorSub(colors[index], colors[index - 1]);
-
-					color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
-
-					return false;
-				}
-			});
-
-			if(color === null) {
-				color = colors[colors.length - 1];
-			}
-
-			switch(changeWhat)
-			{
-				case "cell-background":
-					$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color: ' + colorRGB(color) + ' !important;' });
-					$(this).css("background-image", "none");
-					break;
-				case "font":
-				default:
-					$(this).css("color", colorRGB(color));
-					break;
-			}
-		});
-		/* Ratio/Week */
-		$(".stable-List-col-25").each(function(index) {
-			$(this).addClass("ratiocolor");
-			ratio = $(this).children("div")[0].innerHTML;
-			color = null;
-			proc = 0;
-
-			$.each(levels, function(index, level) {
-				if(ratio < level) {
-					leveldiff = level - levels[index - 1];
-					proc = (ratio - levels[index - 1]) / leveldiff;
-
-					diffColor = colorSub(colors[index], colors[index - 1]);
-
-					color = colorAdd(colorMul(diffColor, proc), colors[index - 1]);
-
-					return false;
-				}
-			});
-
-			if(color === null) {
-				color = colors[colors.length - 1];
-			}
-
-			switch(changeWhat)
-			{
-				case "cell-background":
-					$(this).attr('style', function(i, s) { return s.replace(/background-color:(.*?);/, '') + 'background-color: ' + colorRGB(color) + ' !important;' });
-					$(this).css("background-image", "none");
-					break;
-				case "font":
-				default:
-					$(this).css("color", colorRGB(color));
-					break;
-			}
-		});
-		/* Ratio/Month */
-		$(".stable-List-col-26").each(function(index) {
+		$(column).each(function(index) {
 			$(this).addClass("ratiocolor");
 			ratio = $(this).children("div")[0].innerHTML;
 			color = null;
@@ -226,9 +118,12 @@ plugin.onLangLoaded = function() {
 			plugin.tempFunc = theWebUI.tables.trt.obj.refreshRows;
 			theWebUI.tables.trt.obj.refreshRows = function(height, fromScroll) {
 				plugin.tempFunc.call(theWebUI.tables.trt.obj, height, fromScroll);
-				theWebUI.setRatioColors();
-				if(allRatioColumns && thePlugins.isInstalled("trafic"))
-					theWebUI.setRatioColors2();
+				theWebUI.setRatioColors(".stable-List-col-6");
+				if(allRatioColumns && thePlugins.isInstalled("trafic")) {
+					theWebUI.setRatioColors(".stable-List-col-24");
+					theWebUI.setRatioColors(".stable-List-col-25");
+					theWebUI.setRatioColors(".stable-List-col-26");
+				}
 			};
 		}
 	}
