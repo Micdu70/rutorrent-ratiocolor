@@ -2,7 +2,7 @@
 Ratiocolors!
 Change the color of the ratio column according to the ratio
 Original script written by Gyran
-Modified by Micdu70
+Modified by Micdu70 and senki
 ***/
 
 plugin.loadLang();
@@ -120,9 +120,26 @@ plugin.onLangLoaded = function() {
 				plugin.tempFunc.call(theWebUI.tables.trt.obj, height, fromScroll);
 				theWebUI.setRatioColors(".stable-List-col-6");
 				if(allRatioColumns && thePlugins.isInstalled("trafic")) {
-					theWebUI.setRatioColors(".stable-List-col-24");
-					theWebUI.setRatioColors(".stable-List-col-25");
-					theWebUI.setRatioColors(".stable-List-col-26");
+					let c = theWebUI.tables.trt.columns.length;
+					let n = 17;
+					if(thePlugins.isInstalled("uploadeta"))
+						n = 20;
+					let x = 0;
+					for(let i = n; i < c; i++) {
+						let s = $(".stable-List-col-"+i).css("text-align");
+						if(s === "right")
+							x++;
+						else
+							x = 0;
+						if(x === 3) {
+							theWebUI.setRatioColors(".stable-List-col-"+i);
+							i--;
+							theWebUI.setRatioColors(".stable-List-col-"+i);
+							i--;
+							theWebUI.setRatioColors(".stable-List-col-"+i);
+							break;
+						}
+					}
 				}
 			};
 		}
